@@ -1,8 +1,31 @@
-﻿@{
+﻿@model List<CashRequest>
+@{
     ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1>Cash Requests</h1>
+
+    @foreach (var cashRequest in Model)
+    {
+        <div id="accordion">
+            <div class="card">
+                <div class="card-header" id="headingOne_@cashRequest.CashRequestID" >
+                    <h5 class="mb-0">
+                        <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne_@cashRequest.CashRequestID" aria-expanded="false" aria-controls="collapseOne_@cashRequest.CashRequestID">
+                            @cashRequest.Recipent
+                        </button>
+                    </h5>
+                </div>
+
+                <div id="collapseOne_@cashRequest.CashRequestID" class="collapse" aria-labelledby="headingOne_@cashRequest.CashRequestID" data-parent="#accordion" >
+                    <div class="card-body">
+                        <h5 class="card-title">@cashRequest.Recipent</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">@cashRequest.Amount</h6>
+                        <p class="card-text">@cashRequest.Description</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
 </div>

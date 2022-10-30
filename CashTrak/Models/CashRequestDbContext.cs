@@ -19,9 +19,38 @@ namespace CashTrak.Models
                 new CashRequest
                 {
                     CashRequestID = 1,
-                    Username = "Justin",
-                    Money = 15.99,
+                    User = "Justin",
+                    Recipent = "Jason",
+                    Type = "Incoming",
+                    Amount = 15.99,
                     Description = "Owe me money for food man"
+                },
+                new CashRequest
+                {
+                    CashRequestID = 2,
+                    User = "Justin",
+                    Recipent = "Gabriel",
+                    Type = "Incoming",
+                    Amount = 35.00,
+                    Description = "Lost a bet"
+                },
+                new CashRequest
+                {
+                    CashRequestID = 3,
+                    User = "Justin",
+                    Recipent = "Jason",
+                    Type = "Outgoing",
+                    Amount = 15.99,
+                    Description = "Owe me money for food man"
+                },
+                new CashRequest
+                {
+                    CashRequestID = 4,
+                    User = "Justin",
+                    Recipent = "Gabriel",
+                    Type = "Outgoing",
+                    Amount = 22.25,
+                    Description = "Fantasy NBA payment"
                 }
                 );
         }

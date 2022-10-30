@@ -10,10 +10,15 @@ namespace CashTrak.Models
 
         public int CashRequestID { get; set; }
 
-        public string Username { get; set; }
+        public string User { get; set; }
 
-        public double Money { get; set; }
+        public string Recipent { get; set; }
+
+        public string Type { get; set; }
+
+        public double Amount { get; set; }
 
         public string? Description { get; set; }
+
     }
 }

@@ -2,7 +2,7 @@
 
 namespace CashTrak.Migrations
 {
-    public partial class MyMigration : Migration
+    public partial class Initialize : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -12,8 +12,10 @@ namespace CashTrak.Migrations
                 {
                     CashRequestID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Username = table.Column<string>(nullable: true),
-                    Money = table.Column<double>(nullable: false),
+                    User = table.Column<string>(nullable: true),
+                    Recipent = table.Column<string>(nullable: true),
+                    Type = table.Column<string>(nullable: true),
+                    Amount = table.Column<double>(nullable: false),
                     Description = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -23,8 +25,14 @@ namespace CashTrak.Migrations
 
             migrationBuilder.InsertData(
                 table: "CashRequests",
-                columns: new[] { "CashRequestID", "Description", "Money", "Username" },
-                values: new object[] { 1, "Owe me money for food man", 15.99, "Justin" });
+                columns: new[] { "CashRequestID", "Amount", "Description", "Recipent", "Type", "User" },
+                values: new object[,]
+                {
+                    { 1, 15.99, "Owe me money for food man", "Jason", "Incoming", "Justin" },
+                    { 2, 35.0, "Lost a bet", "Gabriel", "Incoming", "Justin" },
+                    { 3, 15.99, "Owe me money for food man", "Jason", "Outgoing", "Justin" },
+                    { 4, 22.25, "Fantasy NBA payment", "Gabriel", "Outgoing", "Justin" }
+                });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

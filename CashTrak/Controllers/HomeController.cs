@@ -1,26 +1,29 @@
-﻿using CashTrak.Models;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using CashTrak.Models;
 
 namespace CashTrak.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+
+        private CashRequestDbContext MyContext { get; set; }
+
+        public HomeController(CashRequestDbContext context)
         {
-            _logger = logger;
+            MyContext = context;
         }
 
         public IActionResult Index()
         {
-            return View();
+            var cashRequest = MyContext.CashRequests.OrderBy(c => c.Recipent).ToList();
+            return View(cashRequest);
         }
 
         public IActionResult Profile()
