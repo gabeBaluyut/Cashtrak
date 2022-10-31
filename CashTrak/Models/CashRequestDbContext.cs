@@ -23,7 +23,9 @@ namespace CashTrak.Models
                     Recipent = "Jason",
                     Type = "Incoming",
                     Amount = 15.99,
-                    Description = "Owe me money for food man"
+                    Description = "Owe me money for food man",
+                    DueDate = new DateTime(2022, 10, 31),
+                    CreationDate = new DateTime(2022, 10, 30)
                 },
                 new CashRequest
                 {
@@ -32,7 +34,9 @@ namespace CashTrak.Models
                     Recipent = "Gabriel",
                     Type = "Incoming",
                     Amount = 35.00,
-                    Description = "Lost a bet"
+                    Description = "Lost a bet",
+                    DueDate = new DateTime(2022, 10, 31),
+                    CreationDate = new DateTime(2022, 10, 30)
                 },
                 new CashRequest
                 {
@@ -41,7 +45,9 @@ namespace CashTrak.Models
                     Recipent = "Jason",
                     Type = "Outgoing",
                     Amount = 15.99,
-                    Description = "Owe me money for food man"
+                    Description = "Owe me money for food man",
+                    DueDate = new DateTime(2022, 10, 31),
+                    CreationDate = new DateTime(2022, 10, 30)
                 },
                 new CashRequest
                 {
@@ -50,7 +56,9 @@ namespace CashTrak.Models
                     Recipent = "Gabriel",
                     Type = "Outgoing",
                     Amount = 22.25,
-                    Description = "Fantasy NBA payment"
+                    Description = "Fantasy NBA payment",
+                    DueDate = new DateTime(2022, 10, 31),
+                    CreationDate = new DateTime(2022, 10, 30)
                 }
                 );
         }

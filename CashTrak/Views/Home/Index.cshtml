@@ -47,7 +47,7 @@
                                                 <p class="card-text">@cashRequest.Type</p>
                                             </div>
                                             <div class="col">
-                                                <p class="card-text">Oct 31 2022</p>
+                                                <p class="card-text">@cashRequest.DueDate.ToString("MM/dd/yyyy")</p>
                                             </div>
                                         </div>
                                     </div>
@@ -56,6 +56,21 @@
                                 <div id="collapseOne_@cashRequest.CashRequestID" class="collapse" aria-labelledby="headingOne_@cashRequest.CashRequestID" data-parent="#accordion">
                                     <div class="card-body">
                                         <p class="card-text">@cashRequest.Description</p>
+                                        <div class="container ">
+                                            <div class="row">
+                                                <div class="col">
+                                                    <p class="card-text">Created on: <br />@cashRequest.CreationDate.ToString("MM/dd/yyyy") </p>
+                                                </div>
+                                                <div class="coL-6">
+                                                    <button type="button" class="btn btn-primary">Finish</button>
+                                                    <button type="button" class="btn btn-secondary">Edit</button>
+                                                    <button type="button" class="btn btn-danger">Delete</button>
+                                                </div>
+                                                <div class="col">
+                                                    <p class="card-text">Status: <br /> Awaiting</p>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -79,7 +94,7 @@
                                                 <p class="card-text">@cashRequest.Type</p>
                                             </div>
                                             <div class="col">
-                                                <p class="card-text">Oct 31 2022</p>
+                                                <p class="card-text">@cashRequest.DueDate.ToString("MM/dd/yyyy")</p>
                                             </div>
                                         </div>
                                     </div>
