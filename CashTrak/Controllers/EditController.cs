@@ -11,6 +11,11 @@ namespace CashTrak.Controllers
     {
         private CashRequestDbContext MyContext { get; set; }
 
+        public EditController(CashRequestDbContext context)
+        {
+            MyContext = context;
+        }
+
         [HttpGet]
         public IActionResult Edit(int id)
         {

@@ -11,17 +11,22 @@ namespace CashTrak.Controllers
     {
         private CashRequestDbContext MyContext { get; set; }
 
-/*        [HttpGet]
+        public DeleteController(CashRequestDbContext context)
+        {
+            MyContext = context;
+        }
+
+        [HttpGet]
         public IActionResult Delete(int id)
         {
             var cashRequest = MyContext.CashRequests.Find(id);
+            
             return View(cashRequest);
-        }*/
-                
+        }
+
         [HttpPost]
-        public IActionResult Delete(int id)
+        public IActionResult Delete(CashRequest cashRequest)
         {
-            var cashRequest = MyContext.CashRequests.Find(id);
             MyContext.CashRequests.Remove(cashRequest);
             MyContext.SaveChanges();
             return RedirectToAction("Index", "Home");

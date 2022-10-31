@@ -62,8 +62,9 @@
                                                 </div>
                                                 <div class="coL-6">
                                                     <button type="button" class="btn btn-primary">Finish</button>
-                                                    <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#editModal_@cashRequest.CashRequestID">Edit</button>
-                                                    <!-- Edit Modal -->
+                                                    <a type="button" class="btn btn-secondary" asp-controller="Edit" asp-action="Edit" asp-route-id="@cashRequest.CashRequestID">Edit</a>
+@*                                                    <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#editModal_@cashRequest.CashRequestID">Edit</button>
+                                                     Edit Modal 
                                                     <div class="modal fade" id="editModal_@cashRequest.CashRequestID" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
                                                         <div class="modal-dialog" role="document">
                                                             <div class="modal-content">
@@ -82,9 +83,10 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal_@cashRequest.CashRequestID">Delete</button>
-                                                    <!-- Delete Modal -->
+                                                    </div>*@
+                                                    <a type="button" class="btn btn-danger" asp-controller="Delete" asp-action="Delete" asp-route-id="@cashRequest.CashRequestID">Delete</a>
+@*                                                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal_@cashRequest.CashRequestID">Delete</button>
+                                                     Delete Modal 
                                                     <div class="modal fade" id="deleteModal_@cashRequest.CashRequestID" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
                                                         <div class="modal-dialog" role="document">
                                                             <div class="modal-content">
@@ -103,7 +105,7 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </div>
+                                                    </div>*@
                                                 </div>
                                                 <div class="col">
                                                     <p class="card-text">Status: <br /> Awaiting</p>
@@ -149,8 +151,8 @@
                                                 </div>
                                                 <div class="coL-6">
                                                     <button type="button" class="btn btn-primary">Finish</button>
-                                                    <button type="button" class="btn btn-secondary">Edit</button>
-                                                    <button type="button" class="btn btn-danger">Delete</button>
+                                                    <a type="button" class="btn btn-secondary" asp-controller="Edit" asp-action="Edit" asp-route-id="@cashRequest.CashRequestID">Edit</a>
+                                                    <a type="button" class="btn btn-danger" asp-controller="Delete" asp-action="Delete" asp-route-id="@cashRequest.CashRequestID">Delete</a>
                                                 </div>
                                                 <div class="col">
                                                     <p class="card-text">Status: <br /> Awaiting</p>
@@ -165,8 +167,8 @@
                 }
             </div>
             <div class="col">
-                <h3 class="py-4">Total Money Owed: @incomingTotal</h3>
-                <h3 class="py-4">Total Money Due: @outgoingTotal</h3>
+                <h3 class="py-4">Total Money Owed: $@incomingTotal</h3>
+                <h3 class="py-4">Total Money Due: $@outgoingTotal</h3>
                 <button type="button" class="btn btn-primary my-4">Create New Cash Request</button>
             </div>
         </div>
