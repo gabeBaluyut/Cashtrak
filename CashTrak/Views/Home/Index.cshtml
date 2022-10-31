@@ -1,31 +1,105 @@
 ﻿@model List<CashRequest>
 @{
     ViewData["Title"] = "Home Page";
+    var incomingTotal = 0.00;
+    var outgoingTotal = 0.00;
 }
 
 <div class="text-center">
-    <h1>Cash Requests</h1>
 
-    @foreach (var cashRequest in Model)
-    {
-        <div id="accordion">
-            <div class="card">
-                <div class="card-header" id="headingOne_@cashRequest.CashRequestID" >
-                    <h5 class="mb-0">
-                        <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne_@cashRequest.CashRequestID" aria-expanded="false" aria-controls="collapseOne_@cashRequest.CashRequestID">
-                            @cashRequest.Recipent
-                        </button>
-                    </h5>
-                </div>
-
-                <div id="collapseOne_@cashRequest.CashRequestID" class="collapse" aria-labelledby="headingOne_@cashRequest.CashRequestID" data-parent="#accordion" >
-                    <div class="card-body">
-                        <h5 class="card-title">@cashRequest.Recipent</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">@cashRequest.Amount</h6>
-                        <p class="card-text">@cashRequest.Description</p>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <h2 class="py-2">Ongoing Cash Requests</h2>
+                <div class="container">
+                    <div class="row">
+                        <div class="col">
+                            <h5 class="card-title">Name</h5>
+                        </div>
+                        <div class="col">
+                            <h5 class="card-title">Amount</h5>
+                        </div>
+                        <div class="col">
+                            <h5 class="card-title">Type</h5>
+                        </div>
+                        <div class="col">
+                            <h5 class="card-title">Due Date</h5>
+                        </div>
                     </div>
                 </div>
+                @foreach (var cashRequest in Model)
+                {
+                    if (cashRequest.Type == "Incoming")
+                    {
+                        incomingTotal += cashRequest.Amount;
+                        <div id="accordion">
+                            <div class="card">
+                                <div class="card-header bg-success" id="headingOne_@cashRequest.CashRequestID" data-toggle="collapse" data-target="#collapseOne_@cashRequest.CashRequestID" aria-expanded="false" aria-controls="collapseOne_@cashRequest.CashRequestID">
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col">
+                                                <h5 class="card-title">@cashRequest.Recipent</h5>
+                                            </div>
+                                            <div class="col">
+                                                <p class="card-text">$@cashRequest.Amount</p>
+                                            </div>
+                                            <div class="col">
+                                                <p class="card-text">@cashRequest.Type</p>
+                                            </div>
+                                            <div class="col">
+                                                <p class="card-text">Oct 31 2022</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div id="collapseOne_@cashRequest.CashRequestID" class="collapse" aria-labelledby="headingOne_@cashRequest.CashRequestID" data-parent="#accordion">
+                                    <div class="card-body">
+                                        <p class="card-text">@cashRequest.Description</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        outgoingTotal += cashRequest.Amount;
+                        <div id="accordion">
+                            <div class="card">
+                                <div class="card-header bg-danger" id="headingOne_@cashRequest.CashRequestID" data-toggle="collapse" data-target="#collapseOne_@cashRequest.CashRequestID" aria-expanded="false" aria-controls="collapseOne_@cashRequest.CashRequestID">
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col">
+                                                <h5 class="card-title">@cashRequest.Recipent</h5>
+                                            </div>
+                                            <div class="col">
+                                                <p class="card-text">$@cashRequest.Amount</p>
+                                            </div>
+                                            <div class="col">
+                                                <p class="card-text">@cashRequest.Type</p>
+                                            </div>
+                                            <div class="col">
+                                                <p class="card-text">Oct 31 2022</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div id="collapseOne_@cashRequest.CashRequestID" class="collapse" aria-labelledby="headingOne_@cashRequest.CashRequestID" data-parent="#accordion">
+                                    <div class="card-body">
+                                        <p class="card-text">@cashRequest.Description</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+            <div class="col">
+                <h3 class="py-4">Total Money Owed: @incomingTotal</h3>
+                <h3 class="py-4">Total Money Due: @outgoingTotal</h3>
+                <button type="button" class="btn btn-primary my-4">Create New Cash Request</button>
             </div>
         </div>
-    }
+    </div>
 </div>
