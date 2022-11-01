@@ -31,6 +31,8 @@ namespace CashTrak.Controllers
         [HttpPost]
         public IActionResult Create(CashRequest cashRequest)
         {
+            cashRequest.CreationDate = System.DateTime.Now;
+            cashRequest.Type = "Incoming";
             MyContext.CashRequests.Add(cashRequest);
             MyContext.SaveChanges();
             return RedirectToAction("index", "home");
