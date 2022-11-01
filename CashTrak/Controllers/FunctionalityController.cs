@@ -31,8 +31,10 @@ namespace CashTrak.Controllers
         [HttpPost]
         public IActionResult Create(CashRequest cashRequest)
         {
+            //Hardcoded User because no auth yet
+            cashRequest.User = "Justin";
             cashRequest.CreationDate = System.DateTime.Now;
-            cashRequest.Type = "Incoming";
+            //cashRequest.Type = "Incoming";
             MyContext.CashRequests.Add(cashRequest);
             MyContext.SaveChanges();
             return RedirectToAction("index", "home");

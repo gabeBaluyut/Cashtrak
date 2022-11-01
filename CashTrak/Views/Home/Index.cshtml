@@ -167,8 +167,8 @@
                 }
             </div>
             <div class="col">
-                <h3 class="py-4">Total Money Owed: @incomingTotal</h3>
-                <h3 class="py-4">Total Money Due: @outgoingTotal</h3>
+                <h3 class="py-4">Total Money Owed: $@Math.Round(incomingTotal, 2)</h3>
+                <h3 class="py-4">Total Money Due: $@Math.Round(outgoingTotal, 2)</h3>
                 <a class="btn btn-primary" asp-controller="Functionality" asp-action="Create">Create New Cash Request</a>
                 <!-- Below code is for modal to be used in modal, still being worked out -->
                 @*<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
