@@ -1,0 +1,43 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model CashRequest
+
+<h2>Create new cash request</h2>
+
+<form method="post" asp-action="Create">
+    <div class="form-group">
+        <label asp-for="Recipent">Recipent</label>
+        <input asp-for="Recipent" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Amount">Amount</label>
+        <input asp-for="Amount" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Description">Reason</label>
+        <input asp-for="Description" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="DueDate">Due Date</label>
+        <input asp-for="DueDate" class="form-control" type="datetime-local" />
+    </div>
+    <div class="form-group">
+        <label asp-for="User">User</label>
+        <input asp-for="User" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Type">Type</label>
+        <input asp-for="Type" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="CreationDate">Creation Date</label>
+        <input asp-for="CreationDate" class="form-control" type="datetime-local" />
+    </div>
+    @*<div class="form-group">
+        <label asp-for="CashRequestID">ID</label>
+        <input asp-for="CashRequestID" class="form-control" />
+    </div>*@
+    <button type="submit" class="btn btn-primary">Create</button>
+
+</form>
