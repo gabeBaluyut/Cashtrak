@@ -16,19 +16,14 @@ namespace CashTrak.Controllers
             MyContext = context;
         }
 
-        [HttpGet]
         public IActionResult Delete(int id)
-        {
+        {           
             var cashRequest = MyContext.CashRequests.Find(id);
-            
-            return View(cashRequest);
-        }
-
-        [HttpPost]
-        public IActionResult Delete(CashRequest cashRequest)
-        {
-            MyContext.CashRequests.Remove(cashRequest);
-            MyContext.SaveChanges();
+            if (cashRequest != null)
+            {
+                MyContext.CashRequests.Remove(cashRequest);
+                MyContext.SaveChanges();
+            }
             return RedirectToAction("Index", "Home");
         }
     }
