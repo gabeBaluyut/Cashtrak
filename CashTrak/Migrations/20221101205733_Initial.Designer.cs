@@ -10,13 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CashTrak.Migrations
 {
     [DbContext(typeof(CashRequestDbContext))]
-<<<<<<<< HEAD:CashTrak/Migrations/20221101033940_Initial.Designer.cs
-    [Migration("20221101033940_Initial")]
+    [Migration("20221101205733_Initial")]
     partial class Initial
-========
-    [Migration("20221031020431_Initalize")]
-    partial class Initalize
->>>>>>>> gabriel:CashTrak/Migrations/20221031020431_Initalize.Designer.cs
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
