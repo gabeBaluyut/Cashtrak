@@ -28,7 +28,7 @@
                 </div>
                 @foreach (var cashRequest in Model)
                 {
-                    if (cashRequest.Type == "Incoming")
+                    if (cashRequest.Type == "Incoming" && cashRequest.State != "Complete")
                     {
                         incomingTotal += cashRequest.Amount;
                         <div id="accordion">
@@ -87,7 +87,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="col">
-                                                    <p class="card-text">Status: <br /> Awaiting</p>
+                                                    <p class="card-text">Status: <br /> @cashRequest.State</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -96,7 +96,7 @@
                             </div>
                         </div>
                     }
-                    else
+                    else if(cashRequest.Type == "Outgoing" && cashRequest.State != "Complete")
                     {
                         outgoingTotal += cashRequest.Amount;
                         <div id="accordion">
@@ -155,7 +155,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="col">
-                                                    <p class="card-text">Status: <br /> Awaiting</p>
+                                                    <p class="card-text">Status: <br /> @cashRequest.State</p>
                                                 </div>
                                             </div>
                                         </div>

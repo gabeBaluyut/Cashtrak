@@ -2,9 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
 namespace CashTrak.Models
 {
+    public enum TypeList {
+        Incoming,
+        Outgoing
+    }
     public class CashRequest
     {
 
@@ -19,10 +24,11 @@ namespace CashTrak.Models
         public double Amount { get; set; }
 
         public string? Description { get; set; }
-
         public DateTime DueDate { get; set; }
 
         public DateTime CreationDate { get; set; }
+
+        public string State { get; set; }
 
     }
 }

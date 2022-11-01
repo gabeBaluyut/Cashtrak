@@ -28,7 +28,8 @@ namespace CashTrak.Controllers
 
         public IActionResult Profile()
         {
-            return View();
+            var cashRequest = MyContext.CashRequests.OrderBy(c => c.Recipent).ToList();
+            return View(cashRequest);
         }
 
         public IActionResult Friends()

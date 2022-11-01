@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CashTrak.Migrations
 {
     [DbContext(typeof(CashRequestDbContext))]
-    [Migration("20221101205733_Initial")]
+    [Migration("20221101232238_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -43,6 +43,9 @@ namespace CashTrak.Migrations
                     b.Property<string>("Recipent")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("State")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Type")
                         .HasColumnType("nvarchar(max)");
 
@@ -62,6 +65,7 @@ namespace CashTrak.Migrations
                             Description = "Owe me money for food man",
                             DueDate = new DateTime(2022, 10, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Recipent = "Jason",
+                            State = "Created",
                             Type = "Incoming",
                             User = "Justin"
                         },
@@ -73,6 +77,7 @@ namespace CashTrak.Migrations
                             Description = "Lost a bet",
                             DueDate = new DateTime(2022, 10, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Recipent = "Gabriel",
+                            State = "Created",
                             Type = "Incoming",
                             User = "Justin"
                         },
@@ -84,6 +89,7 @@ namespace CashTrak.Migrations
                             Description = "Owe me money for food man",
                             DueDate = new DateTime(2022, 10, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Recipent = "Jason",
+                            State = "Created",
                             Type = "Outgoing",
                             User = "Justin"
                         },
@@ -95,6 +101,67 @@ namespace CashTrak.Migrations
                             Description = "Fantasy NBA payment",
                             DueDate = new DateTime(2022, 10, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Recipent = "Gabriel",
+                            State = "Created",
+                            Type = "Outgoing",
+                            User = "Justin"
+                        },
+                        new
+                        {
+                            CashRequestID = 5,
+                            Amount = 15.99,
+                            CreationDate = new DateTime(2022, 10, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Owe me money for food man",
+                            DueDate = new DateTime(2022, 10, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Recipent = "Dave",
+                            State = "Complete",
+                            Type = "Incoming",
+                            User = "Justin"
+                        },
+                        new
+                        {
+                            CashRequestID = 6,
+                            Amount = 35.0,
+                            CreationDate = new DateTime(2022, 10, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Lost a bet",
+                            DueDate = new DateTime(2022, 10, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Recipent = "Donna",
+                            State = "Complete",
+                            Type = "Incoming",
+                            User = "Justin"
+                        },
+                        new
+                        {
+                            CashRequestID = 7,
+                            Amount = 55.549999999999997,
+                            CreationDate = new DateTime(2022, 10, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Sold a pair of tic tacs for 55bucks",
+                            DueDate = new DateTime(2022, 10, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Recipent = "Daniel",
+                            State = "Complete",
+                            Type = "Outgoing",
+                            User = "Justin"
+                        },
+                        new
+                        {
+                            CashRequestID = 8,
+                            Amount = 16.949999999999999,
+                            CreationDate = new DateTime(2022, 10, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Food money",
+                            DueDate = new DateTime(2022, 10, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Recipent = "Miko",
+                            State = "Complete",
+                            Type = "Outgoing",
+                            User = "Justin"
+                        },
+                        new
+                        {
+                            CashRequestID = 9,
+                            Amount = 5.9500000000000002,
+                            CreationDate = new DateTime(2022, 10, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Payment for homework",
+                            DueDate = new DateTime(2022, 10, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Recipent = "Eric",
+                            State = "Complete",
                             Type = "Outgoing",
                             User = "Justin"
                         });
