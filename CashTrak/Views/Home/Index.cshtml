@@ -33,7 +33,7 @@
                         incomingTotal += cashRequest.Amount;
                         <div id="accordion">
                             <div class="card">
-                                <div class="card-header bg-success" id="headingOne_@cashRequest.CashRequestID" data-toggle="collapse" data-target="#collapseOne_@cashRequest.CashRequestID" aria-expanded="false" aria-controls="collapseOne_@cashRequest.CashRequestID">
+                                <div class="card-header" id="headingOne_@cashRequest.CashRequestID" data-toggle="collapse" data-target="#collapseOne_@cashRequest.CashRequestID" aria-expanded="false" aria-controls="collapseOne_@cashRequest.CashRequestID" style="background-color: #9EEDA1">
                                     <div class="container">
                                         <div class="row">
                                             <div class="col">
@@ -61,10 +61,8 @@
                                                     <p class="card-text">Created on: <br />@cashRequest.CreationDate.ToString("MM/dd/yyyy") </p>
                                                 </div>
                                                 <div class="coL-6">
-                                                    <button type="button" class="btn btn-primary">Finish</button>
                                                     <a type="button" class="btn btn-secondary" asp-controller="Edit" asp-action="Edit" asp-route-id="@cashRequest.CashRequestID">Edit</a>
-
-                                                    <a class="btn btn-danger" data-toggle="modal" data-target="#deleteModal_@cashRequest.CashRequestID" onclick="Confirm(@cashRequest.CashRequestID)">Delete</a>
+                                                    <a class="btn btn-danger" data-toggle="modal" data-target="#deleteModal_@cashRequest.CashRequestID" onclick="Confirm(@cashRequest.CashRequestID)" style="color:white">Delete</a>
                                                     <!-- Incoming Requests Delete Modal -->
                                                     <div class="modal fade" id="deleteModal_@cashRequest.CashRequestID" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
                                                         <div class="modal-dialog" role="document">
@@ -85,6 +83,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
+                                                    <button type="button" class="btn btn-primary">Send</button>
                                                 </div>
                                                 <div class="col">
                                                     <p class="card-text">Status: <br /> @cashRequest.State</p>
@@ -101,7 +100,7 @@
                         outgoingTotal += cashRequest.Amount;
                         <div id="accordion">
                             <div class="card">
-                                <div class="card-header bg-danger" id="headingOne_@cashRequest.CashRequestID" data-toggle="collapse" data-target="#collapseOne_@cashRequest.CashRequestID" aria-expanded="false" aria-controls="collapseOne_@cashRequest.CashRequestID">
+                                <div class="card-header" id="headingOne_@cashRequest.CashRequestID" data-toggle="collapse" data-target="#collapseOne_@cashRequest.CashRequestID" aria-expanded="false" aria-controls="collapseOne_@cashRequest.CashRequestID" style="background-color: #F39595">
                                     <div class="container">
                                         <div class="row">
                                             <div class="col">
@@ -129,10 +128,8 @@
                                                     <p class="card-text">Created on: <br />@cashRequest.CreationDate.ToString("MM/dd/yyyy") </p>
                                                 </div>
                                                 <div class="coL-6">
-                                                    <button type="button" class="btn btn-primary">Finish</button>
                                                     <a type="button" class="btn btn-secondary" asp-controller="Edit" asp-action="Edit" asp-route-id="@cashRequest.CashRequestID">Edit</a>
-
-                                                    <a class="btn btn-danger" data-toggle="modal" data-target="#deleteModal_@cashRequest.CashRequestID" onclick="Confirm(@cashRequest.CashRequestID)">Delete</a>
+                                                    <a class="btn btn-danger" data-toggle="modal" data-target="#deleteModal_@cashRequest.CashRequestID" onclick="Confirm(@cashRequest.CashRequestID)" style="color:white">Delete</a>
                                                     <!-- Outgoing Requests Delete Modal -->
                                                     <div class="modal fade" id="deleteModal_@cashRequest.CashRequestID" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
                                                         <div class="modal-dialog" role="document">
@@ -153,6 +150,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
+                                                    <button type="button" class="btn btn-primary">Send</button>
                                                 </div>
                                                 <div class="col">
                                                     <p class="card-text">Status: <br /> @cashRequest.State</p>
@@ -167,8 +165,8 @@
                 }
             </div>
             <div class="col">
-                <h3 class="py-4">Total Money Owed: $@Math.Round(incomingTotal, 2)</h3>
-                <h3 class="py-4">Total Money Due: $@Math.Round(outgoingTotal, 2)</h3>
+                <h3 class="py-4">Total Amount Owed: $@Math.Round(incomingTotal, 2)</h3>
+                <h3 class="py-4">Total Amount Due: $@Math.Round(outgoingTotal, 2)</h3>
                 <a class="btn btn-primary" asp-controller="Functionality" asp-action="Create">Create New Cash Request</a>
                 <!-- Below code is for modal to be used in modal, still being worked out -->
                 @*<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
