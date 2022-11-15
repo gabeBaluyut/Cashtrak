@@ -3,18 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace CashTrak.Models
 {
-    public class CashRequestDbContext : DbContext
+    public class CashRequestDbContext : IdentityDbContext<IdentityUser>
     {
         public CashRequestDbContext(DbContextOptions<CashRequestDbContext> options) : base(options)
         { }
 
         public DbSet<CashRequest> CashRequests { get; set; }
 
+        //public DbSet<User> Recipient { get; set; }
+
         protected override void OnModelCreating(ModelBuilder myModelBuilder)
         {
+            base.OnModelCreating(myModelBuilder);
             myModelBuilder.Entity<CashRequest>().HasData(
                 new CashRequest
                 {

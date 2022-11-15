@@ -18,6 +18,7 @@ namespace CashTrak
 {
     public class Startup
     {
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -31,10 +32,17 @@ namespace CashTrak
             services.AddDbContext<CashRequestDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<CashRequestDbContext>();
 
-            //services.AddDbContext<CashRequestDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            // original solution to authentication / identity
+            //services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            //    .AddEntityFrameworkStores<CashRequestDbContext>();
+
+            services.AddIdentity<IdentityUser, IdentityRole>(options =>
+            {
+                options.Password.RequiredLength = 8;
+                options.Password.RequireNonAlphanumeric = true;
+                options.Password.RequireDigit = true;
+            }).AddEntityFrameworkStores<CashRequestDbContext>().AddDefaultTokenProviders();
 
             services.AddControllersWithViews();
             services.AddRazorPages();
@@ -58,11 +66,16 @@ namespace CashTrak
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
+            // instruction that marks where the routing decisions are made
             app.UseRouting();
 
+            // what are the credentials of this user?
             app.UseAuthentication();
+
+            // based on credentials, is this user allowed to view the page?
             app.UseAuthorization();
 
+            // instruction that configures what code runs after routing decisions
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

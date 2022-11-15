@@ -20,9 +20,13 @@ namespace CashTrak.Controllers
             MyContext = context;
         }
 
+
         public IActionResult Index()
         {
             var cashRequest = MyContext.CashRequests.OrderBy(c => c.Recipent).ToList();
+
+            //todo: add authorization; if user is not signed in, then return RedirectToAction("Login", "Account");
+
             return View(cashRequest);
         }
 
