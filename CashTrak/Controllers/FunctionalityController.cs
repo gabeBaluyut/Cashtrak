@@ -1,14 +1,18 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using CashTrak.Models;
+using System.Linq;
+using System.Dynamic;
+using Microsoft.AspNetCore.Identity;
+
 
 namespace CashTrak.Controllers
 {
     public class FunctionalityController : Controller
     {
+
+        private SignInManager<IdentityUser> SignInManager;
+        private UserManager<IdentityUser> UserManager;
 
         private CashRequestDbContext MyContext { get; set; }
 
@@ -16,15 +20,13 @@ namespace CashTrak.Controllers
         {
             MyContext = context;
         }
-
-        public IActionResult Index()
-        {
-            return View();
-        }
+        
 
         [HttpGet]
         public IActionResult Create()
         {
+            var users = MyContext.Users.OrderBy(c => c.UserName).ToList();
+            ViewBag.Users = users;
             return View("Add", new CashRequest());
         }
 
@@ -33,10 +35,10 @@ namespace CashTrak.Controllers
         {
             if (ModelState.IsValid)
             {
-                //Hardcoded User because no auth yet
-                cashRequest.User = "Justin";
+                cashRequest.User = User.Identity.Name;
                 cashRequest.CreationDate = System.DateTime.Now;
                 cashRequest.Amount = Math.Round(cashRequest.Amount, 2);
+                cashRequest.State = "Created";
                 MyContext.CashRequests.Add(cashRequest);
                 MyContext.SaveChanges();
                 return RedirectToAction("index", "home");

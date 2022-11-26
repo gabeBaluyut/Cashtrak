@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace CashTrak.Migrations
 {
-    public partial class AddIdentityTable : Migration
+    public partial class Inital : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -44,6 +44,26 @@ namespace CashTrak.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CashRequests",
+                columns: table => new
+                {
+                    CashRequestID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    User = table.Column<string>(nullable: true),
+                    Recipent = table.Column<string>(nullable: true),
+                    Type = table.Column<string>(nullable: true),
+                    Amount = table.Column<double>(nullable: false),
+                    Description = table.Column<string>(nullable: true),
+                    DueDate = table.Column<DateTime>(nullable: false),
+                    CreationDate = table.Column<DateTime>(nullable: false),
+                    State = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CashRequests", x => x.CashRequestID);
                 });
 
             migrationBuilder.CreateTable(
@@ -92,8 +112,8 @@ namespace CashTrak.Migrations
                 name: "AspNetUserLogins",
                 columns: table => new
                 {
-                    LoginProvider = table.Column<string>(maxLength: 128, nullable: false),
-                    ProviderKey = table.Column<string>(maxLength: 128, nullable: false),
+                    LoginProvider = table.Column<string>(nullable: false),
+                    ProviderKey = table.Column<string>(nullable: false),
                     ProviderDisplayName = table.Column<string>(nullable: true),
                     UserId = table.Column<string>(nullable: false)
                 },
@@ -137,8 +157,8 @@ namespace CashTrak.Migrations
                 columns: table => new
                 {
                     UserId = table.Column<string>(nullable: false),
-                    LoginProvider = table.Column<string>(maxLength: 128, nullable: false),
-                    Name = table.Column<string>(maxLength: 128, nullable: false),
+                    LoginProvider = table.Column<string>(nullable: false),
+                    Name = table.Column<string>(nullable: false),
                     Value = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -150,6 +170,22 @@ namespace CashTrak.Migrations
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "CashRequests",
+                columns: new[] { "CashRequestID", "Amount", "CreationDate", "Description", "DueDate", "Recipent", "State", "Type", "User" },
+                values: new object[,]
+                {
+                    { 1, 15.99, new DateTime(2022, 10, 30, 0, 0, 0, 0, DateTimeKind.Unspecified), "Owe me money for food man", new DateTime(2022, 10, 31, 0, 0, 0, 0, DateTimeKind.Unspecified), "Jason", "Created", "Incoming", "Justin" },
+                    { 2, 35.0, new DateTime(2022, 10, 30, 0, 0, 0, 0, DateTimeKind.Unspecified), "Lost a bet", new DateTime(2022, 10, 31, 0, 0, 0, 0, DateTimeKind.Unspecified), "Gabriel", "Created", "Incoming", "Justin" },
+                    { 3, 15.99, new DateTime(2022, 10, 30, 0, 0, 0, 0, DateTimeKind.Unspecified), "Owe me money for food man", new DateTime(2022, 10, 31, 0, 0, 0, 0, DateTimeKind.Unspecified), "Jason", "Created", "Outgoing", "Justin" },
+                    { 4, 22.25, new DateTime(2022, 10, 30, 0, 0, 0, 0, DateTimeKind.Unspecified), "Fantasy NBA payment", new DateTime(2022, 10, 31, 0, 0, 0, 0, DateTimeKind.Unspecified), "Gabriel", "Created", "Outgoing", "Justin" },
+                    { 5, 15.99, new DateTime(2022, 10, 30, 0, 0, 0, 0, DateTimeKind.Unspecified), "Owe me money for food man", new DateTime(2022, 10, 31, 0, 0, 0, 0, DateTimeKind.Unspecified), "Dave", "Complete", "Incoming", "Justin" },
+                    { 6, 35.0, new DateTime(2022, 10, 30, 0, 0, 0, 0, DateTimeKind.Unspecified), "Lost a bet", new DateTime(2022, 10, 31, 0, 0, 0, 0, DateTimeKind.Unspecified), "Donna", "Complete", "Incoming", "Justin" },
+                    { 7, 55.549999999999997, new DateTime(2022, 10, 30, 0, 0, 0, 0, DateTimeKind.Unspecified), "Sold a pair of tic tacs for 55bucks", new DateTime(2022, 10, 31, 0, 0, 0, 0, DateTimeKind.Unspecified), "Daniel", "Complete", "Outgoing", "Justin" },
+                    { 8, 16.949999999999999, new DateTime(2022, 10, 30, 0, 0, 0, 0, DateTimeKind.Unspecified), "Food money", new DateTime(2022, 10, 31, 0, 0, 0, 0, DateTimeKind.Unspecified), "Miko", "Complete", "Outgoing", "Justin" },
+                    { 9, 5.9500000000000002, new DateTime(2022, 10, 30, 0, 0, 0, 0, DateTimeKind.Unspecified), "Payment for homework", new DateTime(2022, 10, 31, 0, 0, 0, 0, DateTimeKind.Unspecified), "Eric", "Complete", "Outgoing", "Justin" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -208,6 +244,9 @@ namespace CashTrak.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "CashRequests");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

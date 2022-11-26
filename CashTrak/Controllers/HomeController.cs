@@ -1,10 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Threading.Tasks;
 using CashTrak.Models;
 
 namespace CashTrak.Controllers
@@ -25,14 +21,13 @@ namespace CashTrak.Controllers
         {
             var cashRequest = MyContext.CashRequests.OrderBy(c => c.Recipent).ToList();
 
-            //todo: add authorization; if user is not signed in, then return RedirectToAction("Login", "Account");
-
             return View(cashRequest);
         }
 
         public IActionResult Profile()
         {
             var cashRequest = MyContext.CashRequests.OrderBy(c => c.Recipent).ToList();
+            
             return View(cashRequest);
         }
 
