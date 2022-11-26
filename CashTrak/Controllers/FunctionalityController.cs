@@ -48,5 +48,45 @@ namespace CashTrak.Controllers
                 return RedirectToAction("index", "home");
             }
         }
+
+        
+        public IActionResult Accept(int id)
+        {
+            var cashRequest = MyContext.CashRequests.Find(id);
+            if (cashRequest != null)
+            {
+                cashRequest.State = "Accepted";
+                MyContext.CashRequests.Update(cashRequest);
+                MyContext.SaveChanges();
+            }
+            return RedirectToAction("index", "home");
+
+        }
+
+        public IActionResult Send(int id)
+        {
+            var cashRequest = MyContext.CashRequests.Find(id);
+            if (cashRequest != null)
+            {
+                cashRequest.State = "Sent";
+                MyContext.CashRequests.Update(cashRequest);
+                MyContext.SaveChanges();
+            }
+            return RedirectToAction("index", "home");
+
+        }
+
+        public IActionResult Complete(int id)
+        {
+            var cashRequest = MyContext.CashRequests.Find(id);
+            if (cashRequest != null)
+            {
+                cashRequest.State = "Complete";
+                MyContext.CashRequests.Update(cashRequest);
+                MyContext.SaveChanges();
+            }
+            return RedirectToAction("index", "home");
+
+        }
     }
 }

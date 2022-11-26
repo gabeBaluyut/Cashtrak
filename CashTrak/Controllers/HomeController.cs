@@ -38,7 +38,9 @@ namespace CashTrak.Controllers
 
         public IActionResult Notifications()
         {
-            return View();
+            var cashRequest = MyContext.CashRequests.OrderBy(c => c.Recipent).ToList();
+
+            return View(cashRequest);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

@@ -31,7 +31,7 @@
                 </div>
                 @foreach (var cashRequest in Model)
                 {
-                    if (cashRequest.Type == "Incoming" && cashRequest.State != "Complete")
+                    if (cashRequest.Type == "Incoming" && cashRequest.State == "Accepted")
                     {
                         if (cashRequest.Recipent == User.Identity.Name)
                         {
@@ -88,7 +88,27 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <button type="button" class="btn btn-primary">Send</button>
+                                                        <a class="btn btn-primary" data-toggle="modal" data-target="#sendModal_@cashRequest.CashRequestID" onclick="Confirm(@cashRequest.CashRequestID)" style="color:white">Send</a>
+                                                        <!-- Incoming Requests Send Modal -->
+                                                        <div class="modal fade" id="sendModal_@cashRequest.CashRequestID" tabindex="-1" role="dialog" aria-labelledby="sendModalLabel" aria-hidden="true">
+                                                            <div class="modal-dialog" role="document">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title" id="sendModalLabel">Confirmation</h5>
+                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                            <span aria-hidden="true">&times;</span>
+                                                                        </button>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        Are you sure you want to complete this Cash Request?
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="Cancel()">Cancel</button>
+                                                                        <a type="button" class="btn btn-danger" asp-controller="Functionality" asp-action="Send" asp-route-id="@cashRequest.CashRequestID">Send</a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                     <div class="col">
                                                         <p class="card-text">Status: <br /> @cashRequest.State</p>
@@ -155,7 +175,27 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <button type="button" class="btn btn-primary">Send</button>
+                                                        <a class="btn btn-primary" data-toggle="modal" data-target="#sendModal_@cashRequest.CashRequestID" onclick="Confirm(@cashRequest.CashRequestID)" style="color:white">Send</a>
+                                                        <!-- Incoming Requests Send Modal -->
+                                                        <div class="modal fade" id="sendModal_@cashRequest.CashRequestID" tabindex="-1" role="dialog" aria-labelledby="sendModalLabel" aria-hidden="true">
+                                                            <div class="modal-dialog" role="document">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title" id="sendModalLabel">Confirmation</h5>
+                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                            <span aria-hidden="true">&times;</span>
+                                                                        </button>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        Are you sure you want to complete this Cash Request?
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="Cancel()">Cancel</button>
+                                                                        <a type="button" class="btn btn-danger" asp-controller="Functionality" asp-action="Send" asp-route-id="@cashRequest.CashRequestID">Send</a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                     <div class="col">
                                                         <p class="card-text">Status: <br /> @cashRequest.State</p>
@@ -168,7 +208,7 @@
                             </div>
                         }
                     }
-                    else if (cashRequest.Type == "Outgoing" && cashRequest.State != "Complete")
+                    else if (cashRequest.Type == "Outgoing" && cashRequest.State == "Accepted")
                     {
                         if (cashRequest.Recipent == User.Identity.Name)
                         {
@@ -225,7 +265,27 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <button type="button" class="btn btn-primary">Send</button>
+                                                        <a class="btn btn-primary" data-toggle="modal" data-target="#sendModal_@cashRequest.CashRequestID" onclick="Confirm(@cashRequest.CashRequestID)" style="color:white">Send</a>
+                                                        <!-- Outgoing Requests Send Modal -->
+                                                        <div class="modal fade" id="sendModal_@cashRequest.CashRequestID" tabindex="-1" role="dialog" aria-labelledby="sendModalLabel" aria-hidden="true">
+                                                            <div class="modal-dialog" role="document">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title" id="sendModalLabel">Confirmation</h5>
+                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                            <span aria-hidden="true">&times;</span>
+                                                                        </button>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        Are you sure you want to complete this Cash Request?
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="Cancel()">Cancel</button>
+                                                                        <a type="button" class="btn btn-danger" asp-controller="Functionality" asp-action="Send" asp-route-id="@cashRequest.CashRequestID">Send</a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                     <div class="col">
                                                         <p class="card-text">Status: <br /> @cashRequest.State</p>
@@ -292,7 +352,27 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <button type="button" class="btn btn-primary">Send</button>
+                                                        <a class="btn btn-primary" data-toggle="modal" data-target="#sendModal_@cashRequest.CashRequestID" onclick="Confirm(@cashRequest.CashRequestID)" style="color:white">Send</a>
+                                                        <!-- Outgoing Requests Send Modal -->
+                                                        <div class="modal fade" id="sendModal_@cashRequest.CashRequestID" tabindex="-1" role="dialog" aria-labelledby="sendModalLabel" aria-hidden="true">
+                                                            <div class="modal-dialog" role="document">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title" id="sendModalLabel">Confirmation</h5>
+                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                            <span aria-hidden="true">&times;</span>
+                                                                        </button>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        Are you sure you want to complete this Cash Request?
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="Cancel()">Cancel</button>
+                                                                        <a type="button" class="btn btn-danger" asp-controller="Functionality" asp-action="Send" asp-route-id="@cashRequest.CashRequestID">Send</a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                     <div class="col">
                                                         <p class="card-text">Status: <br /> @cashRequest.State</p>
