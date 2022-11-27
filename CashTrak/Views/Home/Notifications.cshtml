@@ -20,7 +20,7 @@
                         {
                             <div id="accordion">
                                 <div class="card">
-                                    <div class="card-header" id="headingOne_@cashRequest.CashRequestID" data-toggle="collapse" data-target="#collapseOne_@cashRequest.CashRequestID" aria-expanded="false" aria-controls="collapseOne_@cashRequest.CashRequestID" style="background-color: #9EEDA1">
+                                    <div class="card-header" id="headingOne_@cashRequest.CashRequestID" data-toggle="collapse" data-target="#collapseOne_@cashRequest.CashRequestID" aria-expanded="false" aria-controls="collapseOne_@cashRequest.CashRequestID" style="background-color: #F39595">
                                         <div class="container">
                                             <div class="row">
                                                 <div class="col">
@@ -30,7 +30,7 @@
                                                     <p class="card-text">$@cashRequest.Amount</p>
                                                 </div>
                                                 <div class="col">
-                                                    <p class="card-text">@cashRequest.Type</p>
+                                                    <p class="card-text">Outgoing</p>
                                                 </div>
                                                 <div class="col">
                                                     <p class="card-text">@cashRequest.DueDate.ToString("MM/dd/yyyy")</p>
@@ -38,7 +38,6 @@
                                             </div>
                                         </div>
                                     </div>
-
                                     <div id="collapseOne_@cashRequest.CashRequestID" class="collapse" aria-labelledby="headingOne_@cashRequest.CashRequestID" data-parent="#accordion">
                                         <div class="card-body">
                                             <p class="card-text">@cashRequest.Description</p>
@@ -68,7 +67,7 @@
                         {
                             <div id="accordion">
                                 <div class="card">
-                                    <div class="card-header" id="headingOne_@cashRequest.CashRequestID" data-toggle="collapse" data-target="#collapseOne_@cashRequest.CashRequestID" aria-expanded="false" aria-controls="collapseOne_@cashRequest.CashRequestID" style="background-color: #F39595">
+                                    <div class="card-header" id="headingOne_@cashRequest.CashRequestID" data-toggle="collapse" data-target="#collapseOne_@cashRequest.CashRequestID" aria-expanded="false" aria-controls="collapseOne_@cashRequest.CashRequestID" style="background-color: #9EEDA1">
                                         <div class="container">
                                             <div class="row">
                                                 <div class="col">
@@ -78,7 +77,7 @@
                                                     <p class="card-text">$@cashRequest.Amount</p>
                                                 </div>
                                                 <div class="col">
-                                                    <p class="card-text">@cashRequest.Type</p>
+                                                    <p class="card-text">Incoming</p>
                                                 </div>
                                                 <div class="col">
                                                     <p class="card-text">@cashRequest.DueDate.ToString("MM/dd/yyyy")</p>
@@ -86,6 +85,7 @@
                                             </div>
                                         </div>
                                     </div>
+
                                     <div id="collapseOne_@cashRequest.CashRequestID" class="collapse" aria-labelledby="headingOne_@cashRequest.CashRequestID" data-parent="#accordion">
                                         <div class="card-body">
                                             <p class="card-text">@cashRequest.Description</p>
@@ -102,7 +102,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                          </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -114,13 +114,13 @@
                 <h2 class="py-2">Incoming Completion Requests</h2>
                 @foreach (var cashRequest in Model)
                 {
-                    if (cashRequest.Type == "Incoming" && cashRequest.State == "Sent")
+                    if (cashRequest.Type == "Incoming" && cashRequest.State == "Sent" && cashRequest.CompletionRequestUser != User.Identity.Name)
                     {
                         if (cashRequest.Recipent == User.Identity.Name)
                         {
                             <div id="accordion">
                                 <div class="card">
-                                    <div class="card-header" id="headingOne_@cashRequest.CashRequestID" data-toggle="collapse" data-target="#collapseOne_@cashRequest.CashRequestID" aria-expanded="false" aria-controls="collapseOne_@cashRequest.CashRequestID" style="background-color: #9EEDA1">
+                                    <div class="card-header" id="headingOne_@cashRequest.CashRequestID" data-toggle="collapse" data-target="#collapseOne_@cashRequest.CashRequestID" aria-expanded="false" aria-controls="collapseOne_@cashRequest.CashRequestID" style="background-color: #F39595">
                                         <div class="container">
                                             <div class="row">
                                                 <div class="col">
@@ -130,7 +130,7 @@
                                                     <p class="card-text">$@cashRequest.Amount</p>
                                                 </div>
                                                 <div class="col">
-                                                    <p class="card-text">@cashRequest.Type</p>
+                                                    <p class="card-text">Outgoing</p>
                                                 </div>
                                                 <div class="col">
                                                     <p class="card-text">@cashRequest.DueDate.ToString("MM/dd/yyyy")</p>
@@ -138,7 +138,6 @@
                                             </div>
                                         </div>
                                     </div>
-
                                     <div id="collapseOne_@cashRequest.CashRequestID" class="collapse" aria-labelledby="headingOne_@cashRequest.CashRequestID" data-parent="#accordion">
                                         <div class="card-body">
                                             <p class="card-text">@cashRequest.Description</p>
@@ -168,7 +167,7 @@
                                         <div class="container">
                                             <div class="row">
                                                 <div class="col">
-                                                    <h5 class="card-title">@cashRequest.User</h5>
+                                                    <h5 class="card-title">@cashRequest.Recipent</h5>
                                                 </div>
                                                 <div class="col">
                                                     <p class="card-text">$@cashRequest.Amount</p>
@@ -205,13 +204,13 @@
                             </div>
                         }
                     }
-                    else if (cashRequest.Type == "Outgoing" && cashRequest.State == "Sent")
+                    else if (cashRequest.Type == "Outgoing" && cashRequest.State == "Sent" && cashRequest.CompletionRequestUser != User.Identity.Name)
                     {
                         if (cashRequest.Recipent == User.Identity.Name)
                         {
                             <div id="accordion">
                                 <div class="card">
-                                    <div class="card-header" id="headingOne_@cashRequest.CashRequestID" data-toggle="collapse" data-target="#collapseOne_@cashRequest.CashRequestID" aria-expanded="false" aria-controls="collapseOne_@cashRequest.CashRequestID" style="background-color: #F39595">
+                                    <div class="card-header" id="headingOne_@cashRequest.CashRequestID" data-toggle="collapse" data-target="#collapseOne_@cashRequest.CashRequestID" aria-expanded="false" aria-controls="collapseOne_@cashRequest.CashRequestID" style="background-color: #9EEDA1">
                                         <div class="container">
                                             <div class="row">
                                                 <div class="col">
@@ -221,7 +220,7 @@
                                                     <p class="card-text">$@cashRequest.Amount</p>
                                                 </div>
                                                 <div class="col">
-                                                    <p class="card-text">@cashRequest.Type</p>
+                                                    <p class="card-text">Incoming</p>
                                                 </div>
                                                 <div class="col">
                                                     <p class="card-text">@cashRequest.DueDate.ToString("MM/dd/yyyy")</p>
@@ -229,6 +228,7 @@
                                             </div>
                                         </div>
                                     </div>
+
                                     <div id="collapseOne_@cashRequest.CashRequestID" class="collapse" aria-labelledby="headingOne_@cashRequest.CashRequestID" data-parent="#accordion">
                                         <div class="card-body">
                                             <p class="card-text">@cashRequest.Description</p>
@@ -258,7 +258,7 @@
                                         <div class="container">
                                             <div class="row">
                                                 <div class="col">
-                                                    <h5 class="card-title">@cashRequest.User</h5>
+                                                    <h5 class="card-title">@cashRequest.Recipent</h5>
                                                 </div>
                                                 <div class="col">
                                                     <p class="card-text">$@cashRequest.Amount</p>

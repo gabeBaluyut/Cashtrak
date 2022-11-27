@@ -32,5 +32,7 @@ namespace CashTrak.Models
 
         public string State { get; set; }
 
+        public string CompletionRequestUser { get; set; }
+
     }
 }
