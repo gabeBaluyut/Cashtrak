@@ -3,4 +3,29 @@
 }
 <h1>@ViewData["Title"]</h1>
 
-<p>Huge list of notifications here</p>
+
+        @* Due date of request here *@
+                        <div id="accordion">
+                        <div class="card">
+                            <div class="card-header" id="headingOne_@cashRequest.CashRequestID" data-toggle="collapse" data-target="#collapseOne_@cashRequest.CashRequestID" aria-expanded="false" aria-controls="collapseOne_@cashRequest.CashRequestID" style="background-color: #9EEDA1">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col">
+                                            <h5 class="card-title"></h5>
+                                        </div>
+                                        <div class="col">
+                                            <p class="card-text">$@cashRequest.Amount</p>
+                                        </div>
+                                        <div class="col">
+                                            <p class="card-text">@cashRequest.Type</p>
+                                        </div>
+                                        <div class="col">
+                                            <p class="card-text">@cashRequest.DueDate.ToString("MM/dd/yyyy")</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+
+
