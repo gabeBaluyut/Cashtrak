@@ -23,12 +23,16 @@ namespace CashTrak.Models
 
         public double Amount { get; set; }
 
+        //#nullable enable
         public string? Description { get; set; }
+
         public DateTime DueDate { get; set; }
 
         public DateTime CreationDate { get; set; }
 
         public string State { get; set; }
+
+        public string CompletionRequestUser { get; set; }
 
     }
 }

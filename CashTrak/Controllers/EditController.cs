@@ -5,6 +5,17 @@ using System.Linq;
 using System.Threading.Tasks;
 using CashTrak.Models;
 
+
+/// <summary>
+/// Account Controller
+/// Handles all functionality to do with Editing Cash Requests
+/// 
+/// Author: Justin Payne, Gabriel Baluyut, Jason Cheung
+/// Date: Nov 11 2026
+/// Sources: Lab 4 MovieStore
+/// Sources: Lab 5 Routing & Controllers
+/// Sources: Lab 6 Authorization & Authentication
+/// </summary>
 namespace CashTrak.Controllers
 {
     public class EditController : Controller
@@ -16,6 +27,10 @@ namespace CashTrak.Controllers
             MyContext = context;
         }
 
+        /// <summary>
+        /// Sends the user to the edit view
+        /// </summary>
+        /// <param name="id">Int: cashrequest id used to find the cashrequest to edit from the database</param>
         [HttpGet]
         public IActionResult Edit(int id)
         {
@@ -24,6 +39,10 @@ namespace CashTrak.Controllers
             return View(cashRequest);
         }
 
+        /// <summary>
+        /// Updates the cash request in the database
+        /// </summary>
+        /// <param name="cashRequest">CashRequest: Newly updated cash request to save into database</param>
         [HttpPost]
         public IActionResult Edit(CashRequest cashRequest)
         {
