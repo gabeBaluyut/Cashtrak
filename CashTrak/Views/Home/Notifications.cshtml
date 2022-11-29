@@ -47,6 +47,9 @@
                                                         <p class="card-text">Created on: <br />@cashRequest.CreationDate.ToString("MM/dd/yyyy") </p>
                                                     </div>
                                                     <div class="col">
+                                                        <a class="btn btn-danger" asp-controller="Delete" asp-action="Delete" asp-route-id="@cashRequest.CashRequestID">Decline</a>
+                                                    </div>
+                                                    <div class="col">
                                                         <a class="btn btn-primary" asp-controller="Functionality" asp-action="Accept" asp-route-id="@cashRequest.CashRequestID">Accept</a>
                                                     </div>
                                                     <div class="col">
@@ -93,6 +96,9 @@
                                                 <div class="row">
                                                     <div class="col">
                                                         <p class="card-text">Created on: <br />@cashRequest.CreationDate.ToString("MM/dd/yyyy") </p>
+                                                    </div>
+                                                    <div class="col">
+                                                        <a class="btn btn-danger" asp-controller="Delete" asp-action="Delete" asp-route-id="@cashRequest.CashRequestID">Decline</a>
                                                     </div>
                                                     <div class="col">
                                                         <a class="btn btn-primary" asp-controller="Functionality" asp-action="Accept" asp-route-id="@cashRequest.CashRequestID">Accept</a>
