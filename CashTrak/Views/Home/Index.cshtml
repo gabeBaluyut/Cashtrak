@@ -1,8 +1,415 @@
-﻿@{
+﻿@model List<CashRequest>
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+@{
     ViewData["Title"] = "Home Page";
+    var incomingTotal = 0.00;
+    var outgoingTotal = 0.00;
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <h2 class="py-2">Ongoing Cash Requests</h2>
+                <div class="container">
+                    <div class="row">
+                        <div class="col">
+                            <h5 class="card-title">Name</h5>
+                        </div>
+                        <div class="col">
+                            <h5 class="card-title">Amount</h5>
+                        </div>
+                        <div class="col">
+                            <h5 class="card-title">Type</h5>
+                        </div>
+                        <div class="col">
+                            <h5 class="card-title">Due Date</h5>
+                        </div>
+                    </div>
+                </div>
+                @foreach (var cashRequest in Model)
+                {
+                    if (cashRequest.Type == "Incoming" && cashRequest.State == "Accepted")
+                    {
+                        if (cashRequest.Recipent == User.Identity.Name)
+                        {
+
+                            outgoingTotal += cashRequest.Amount;
+                            <div id="accordion">
+                                <div class="card">
+                                    <div class="card-header" id="headingOne_@cashRequest.CashRequestID" data-toggle="collapse" data-target="#collapseOne_@cashRequest.CashRequestID" aria-expanded="false" aria-controls="collapseOne_@cashRequest.CashRequestID" style="background-color: #F39595">
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="col">
+                                                    <h5 class="card-title">@cashRequest.User</h5>
+                                                </div>
+                                                <div class="col">
+                                                    <p class="card-text">$@cashRequest.Amount</p>
+                                                </div>
+                                                <div class="col">
+                                                    <p class="card-text">Outgoing</p>
+                                                </div>
+                                                <div class="col">
+                                                    <p class="card-text">@cashRequest.DueDate.ToString("MM/dd/yyyy")</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div id="collapseOne_@cashRequest.CashRequestID" class="collapse" aria-labelledby="headingOne_@cashRequest.CashRequestID" data-parent="#accordion">
+                                        <div class="card-body">
+                                            <p class="card-text">@cashRequest.Description</p>
+                                            <div class="container ">
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <p class="card-text">Created on: <br />@cashRequest.CreationDate.ToString("MM/dd/yyyy") </p>
+                                                    </div>
+                                                    <div class="coL-6">
+                                                        <a type="button" class="btn btn-secondary" asp-controller="Edit" asp-action="Edit" asp-route-id="@cashRequest.CashRequestID">Edit</a>
+                                                        <a class="btn btn-danger" data-toggle="modal" data-target="#deleteModal_@cashRequest.CashRequestID" onclick="Confirm(@cashRequest.CashRequestID)" style="color:white">Delete</a>
+                                                        <!-- Outgoing Requests Delete Modal -->
+                                                        <div class="modal fade" id="deleteModal_@cashRequest.CashRequestID" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                                                            <div class="modal-dialog" role="document">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title" id="deleteModalLabel">Confirmation</h5>
+                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                            <span aria-hidden="true">&times;</span>
+                                                                        </button>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        Are you sure you want to delete this Cash Request?
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="Cancel()">Cancel</button>
+                                                                        <a type="button" class="btn btn-danger" asp-controller="Delete" asp-action="Delete" asp-route-id="@cashRequest.CashRequestID">Delete</a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <a class="btn btn-primary" data-toggle="modal" data-target="#sendModal_@cashRequest.CashRequestID" onclick="Confirm(@cashRequest.CashRequestID)" style="color:white">Send</a>
+                                                        <!-- Outgoing Requests Send Modal -->
+                                                        <div class="modal fade" id="sendModal_@cashRequest.CashRequestID" tabindex="-1" role="dialog" aria-labelledby="sendModalLabel" aria-hidden="true">
+                                                            <div class="modal-dialog" role="document">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title" id="sendModalLabel">Confirmation</h5>
+                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                            <span aria-hidden="true">&times;</span>
+                                                                        </button>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        Are you sure you want to complete this Cash Request?
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="Cancel()">Cancel</button>
+                                                                        <a type="button" class="btn btn-danger" asp-controller="Functionality" asp-action="Send" asp-route-id="@cashRequest.CashRequestID">Send</a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col">
+                                                        <p class="card-text">Status: <br /> @cashRequest.State</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        else if (cashRequest.User == User.Identity.Name)
+                        {
+                            incomingTotal += cashRequest.Amount;
+                            <div id="accordion">
+                                <div class="card">
+                                    <div class="card-header" id="headingOne_@cashRequest.CashRequestID" data-toggle="collapse" data-target="#collapseOne_@cashRequest.CashRequestID" aria-expanded="false" aria-controls="collapseOne_@cashRequest.CashRequestID" style="background-color: #9EEDA1">
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="col">
+                                                    <h5 class="card-title">@cashRequest.Recipent</h5>
+                                                </div>
+                                                <div class="col">
+                                                    <p class="card-text">$@cashRequest.Amount</p>
+                                                </div>
+                                                <div class="col">
+                                                    <p class="card-text">@cashRequest.Type</p>
+                                                </div>
+                                                <div class="col">
+                                                    <p class="card-text">@cashRequest.DueDate.ToString("MM/dd/yyyy")</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div id="collapseOne_@cashRequest.CashRequestID" class="collapse" aria-labelledby="headingOne_@cashRequest.CashRequestID" data-parent="#accordion">
+                                        <div class="card-body">
+                                            <p class="card-text">@cashRequest.Description</p>
+                                            <div class="container ">
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <p class="card-text">Created on: <br />@cashRequest.CreationDate.ToString("MM/dd/yyyy") </p>
+                                                    </div>
+                                                    <div class="coL-6">
+                                                        <a type="button" class="btn btn-secondary" asp-controller="Edit" asp-action="Edit" asp-route-id="@cashRequest.CashRequestID">Edit</a>
+                                                        <a class="btn btn-danger" data-toggle="modal" data-target="#deleteModal_@cashRequest.CashRequestID" onclick="Confirm(@cashRequest.CashRequestID)" style="color:white">Delete</a>
+                                                        <!-- Incoming Requests Delete Modal -->
+                                                        <div class="modal fade" id="deleteModal_@cashRequest.CashRequestID" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                                                            <div class="modal-dialog" role="document">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title" id="deleteModalLabel">Confirmation</h5>
+                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                            <span aria-hidden="true">&times;</span>
+                                                                        </button>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        Are you sure you want to delete this Cash Request?
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="Cancel()">Cancel</button>
+                                                                        <a type="button" class="btn btn-danger" asp-controller="Delete" asp-action="Delete" asp-route-id="@cashRequest.CashRequestID">Delete</a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <a class="btn btn-primary" data-toggle="modal" data-target="#sendModal_@cashRequest.CashRequestID" onclick="Confirm(@cashRequest.CashRequestID)" style="color:white">Send</a>
+                                                        <!-- Incoming Requests Send Modal -->
+                                                        <div class="modal fade" id="sendModal_@cashRequest.CashRequestID" tabindex="-1" role="dialog" aria-labelledby="sendModalLabel" aria-hidden="true">
+                                                            <div class="modal-dialog" role="document">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title" id="sendModalLabel">Confirmation</h5>
+                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                            <span aria-hidden="true">&times;</span>
+                                                                        </button>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        Are you sure you want to complete this Cash Request?
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="Cancel()">Cancel</button>
+                                                                        <a type="button" class="btn btn-danger" asp-controller="Functionality" asp-action="Send" asp-route-id="@cashRequest.CashRequestID">Send</a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col">
+                                                        <p class="card-text">Status: <br /> @cashRequest.State</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+                    else if (cashRequest.Type == "Outgoing" && cashRequest.State == "Accepted")
+                    {
+                        if (cashRequest.Recipent == User.Identity.Name)
+                        {
+                            incomingTotal += cashRequest.Amount;
+                            <div id="accordion">
+                                <div class="card">
+                                    <div class="card-header" id="headingOne_@cashRequest.CashRequestID" data-toggle="collapse" data-target="#collapseOne_@cashRequest.CashRequestID" aria-expanded="false" aria-controls="collapseOne_@cashRequest.CashRequestID" style="background-color: #9EEDA1">
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="col">
+                                                    <h5 class="card-title">@cashRequest.User</h5>
+                                                </div>
+                                                <div class="col">
+                                                    <p class="card-text">$@cashRequest.Amount</p>
+                                                </div>
+                                                <div class="col">
+                                                    <p class="card-text">Incoming</p>
+                                                </div>
+                                                <div class="col">
+                                                    <p class="card-text">@cashRequest.DueDate.ToString("MM/dd/yyyy")</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div id="collapseOne_@cashRequest.CashRequestID" class="collapse" aria-labelledby="headingOne_@cashRequest.CashRequestID" data-parent="#accordion">
+                                        <div class="card-body">
+                                            <p class="card-text">@cashRequest.Description</p>
+                                            <div class="container ">
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <p class="card-text">Created on: <br />@cashRequest.CreationDate.ToString("MM/dd/yyyy") </p>
+                                                    </div>
+                                                    <div class="coL-6">
+                                                        <a type="button" class="btn btn-secondary" asp-controller="Edit" asp-action="Edit" asp-route-id="@cashRequest.CashRequestID">Edit</a>
+                                                        <a class="btn btn-danger" data-toggle="modal" data-target="#deleteModal_@cashRequest.CashRequestID" onclick="Confirm(@cashRequest.CashRequestID)" style="color:white">Delete</a>
+                                                        <!-- Incoming Requests Delete Modal -->
+                                                        <div class="modal fade" id="deleteModal_@cashRequest.CashRequestID" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                                                            <div class="modal-dialog" role="document">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title" id="deleteModalLabel">Confirmation</h5>
+                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                            <span aria-hidden="true">&times;</span>
+                                                                        </button>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        Are you sure you want to delete this Cash Request?
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="Cancel()">Cancel</button>
+                                                                        <a type="button" class="btn btn-danger" asp-controller="Delete" asp-action="Delete" asp-route-id="@cashRequest.CashRequestID">Delete</a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <a class="btn btn-primary" data-toggle="modal" data-target="#sendModal_@cashRequest.CashRequestID" onclick="Confirm(@cashRequest.CashRequestID)" style="color:white">Send</a>
+                                                        <!-- Incoming Requests Send Modal -->
+                                                        <div class="modal fade" id="sendModal_@cashRequest.CashRequestID" tabindex="-1" role="dialog" aria-labelledby="sendModalLabel" aria-hidden="true">
+                                                            <div class="modal-dialog" role="document">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title" id="sendModalLabel">Confirmation</h5>
+                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                            <span aria-hidden="true">&times;</span>
+                                                                        </button>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        Are you sure you want to complete this Cash Request?
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="Cancel()">Cancel</button>
+                                                                        <a type="button" class="btn btn-danger" asp-controller="Functionality" asp-action="Send" asp-route-id="@cashRequest.CashRequestID">Send</a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col">
+                                                        <p class="card-text">Status: <br /> @cashRequest.State</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        else if (cashRequest.User == User.Identity.Name)
+                        {
+                            outgoingTotal += cashRequest.Amount;
+                            <div id="accordion">
+                                <div class="card">
+                                    <div class="card-header" id="headingOne_@cashRequest.CashRequestID" data-toggle="collapse" data-target="#collapseOne_@cashRequest.CashRequestID" aria-expanded="false" aria-controls="collapseOne_@cashRequest.CashRequestID" style="background-color: #F39595">
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="col">
+                                                    <h5 class="card-title">@cashRequest.Recipent</h5>
+                                                </div>
+                                                <div class="col">
+                                                    <p class="card-text">$@cashRequest.Amount</p>
+                                                </div>
+                                                <div class="col">
+                                                    <p class="card-text">@cashRequest.Type</p>
+                                                </div>
+                                                <div class="col">
+                                                    <p class="card-text">@cashRequest.DueDate.ToString("MM/dd/yyyy")</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div id="collapseOne_@cashRequest.CashRequestID" class="collapse" aria-labelledby="headingOne_@cashRequest.CashRequestID" data-parent="#accordion">
+                                        <div class="card-body">
+                                            <p class="card-text">@cashRequest.Description</p>
+                                            <div class="container ">
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <p class="card-text">Created on: <br />@cashRequest.CreationDate.ToString("MM/dd/yyyy") </p>
+                                                    </div>
+                                                    <div class="coL-6">
+                                                        <a type="button" class="btn btn-secondary" asp-controller="Edit" asp-action="Edit" asp-route-id="@cashRequest.CashRequestID">Edit</a>
+                                                        <a class="btn btn-danger" data-toggle="modal" data-target="#deleteModal_@cashRequest.CashRequestID" onclick="Confirm(@cashRequest.CashRequestID)" style="color:white">Delete</a>
+                                                        <!-- Outgoing Requests Delete Modal -->
+                                                        <div class="modal fade" id="deleteModal_@cashRequest.CashRequestID" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                                                            <div class="modal-dialog" role="document">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title" id="deleteModalLabel">Confirmation</h5>
+                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                            <span aria-hidden="true">&times;</span>
+                                                                        </button>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        Are you sure you want to delete this Cash Request?
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="Cancel()">Cancel</button>
+                                                                        <a type="button" class="btn btn-danger" asp-controller="Delete" asp-action="Delete" asp-route-id="@cashRequest.CashRequestID">Delete</a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <a class="btn btn-primary" data-toggle="modal" data-target="#sendModal_@cashRequest.CashRequestID" onclick="Confirm(@cashRequest.CashRequestID)" style="color:white">Send</a>
+                                                        <!-- Outgoing Requests Send Modal -->
+                                                        <div class="modal fade" id="sendModal_@cashRequest.CashRequestID" tabindex="-1" role="dialog" aria-labelledby="sendModalLabel" aria-hidden="true">
+                                                            <div class="modal-dialog" role="document">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title" id="sendModalLabel">Confirmation</h5>
+                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                            <span aria-hidden="true">&times;</span>
+                                                                        </button>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        Are you sure you want to complete this Cash Request?
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="Cancel()">Cancel</button>
+                                                                        <a type="button" class="btn btn-danger" asp-controller="Functionality" asp-action="Send" asp-route-id="@cashRequest.CashRequestID">Send</a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col">
+                                                        <p class="card-text">Status: <br /> @cashRequest.State</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+                }
+            </div>
+            <div class="col">
+                <h3 class="py-4" style="background-color: #9EEDA1">Total Amount Owed: $@Math.Round(incomingTotal, 2)</h3>
+                <h3 class="py-4" style="background-color: #F39595">Total Amount Due: $@Math.Round(outgoingTotal, 2)</h3>
+                <a class="btn btn-primary" asp-controller="Functionality" asp-action="Create">Create New Cash Request</a>
+                <input type="hidden" id="CashRequestID" />
+            </div>
+        </div>
+    </div>
 </div>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        $(document).ready(function () {
+            // Put OnClick Scripts here
+        })
+        var Confirm = function (id) {
+            $("#CashRequestID").val(id);
+        }
+        var Cancel = function (id) {
+            $("#CashRequestID").val(null);
+        }
+    </script>
+
+}

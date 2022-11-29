@@ -1,0 +1,440 @@
+﻿@model List<CashRequest>
+@{
+    ViewData["Title"] = "Profile";
+}
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<IdentityUser> UserManager
+
+<div class="text-center">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <h2 class="py-2">Completed Cash Requests</h2>
+
+
+                <section id="tabs" class="project-tab">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <nav>
+                                    <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+                                        <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">All</a>
+                                        <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Incoming</a>
+                                        <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Outgoing</a>
+                                    </div>
+                                </nav>
+                                <div class="container pt-2">
+                                    <div class="row">
+                                        <div class="col">
+                                            <h5 class="card-title">Name</h5>
+                                        </div>
+                                        <div class="col">
+                                            <h5 class="card-title">Amount</h5>
+                                        </div>
+                                        <div class="col">
+                                            <h5 class="card-title">Type</h5>
+                                        </div>
+                                        <div class="col">
+                                            <h5 class="card-title">Due Date</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-content" id="nav-tabContent">
+                                    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                                        <!--Populate History with All Completed Cash Requests-->
+                                        @foreach (var cashRequest in Model)
+                                        {
+                                            if (cashRequest.Type == "Incoming" && cashRequest.State == "Complete")
+                                            {
+                                                if (cashRequest.Recipent == User.Identity.Name)
+                                                {
+
+                                                    <div id="accordion">
+                                                        <div class="card">
+                                                            <div class="card-header" id="headingOne_@cashRequest.CashRequestID" data-toggle="collapse" data-target="#collapseOne_@cashRequest.CashRequestID" aria-expanded="false" aria-controls="collapseOne_@cashRequest.CashRequestID" style="background-color: #F39595">
+                                                                <div class="container">
+                                                                    <div class="row">
+                                                                        <div class="col">
+                                                                            <h5 class="card-title">@cashRequest.User</h5>
+                                                                        </div>
+                                                                        <div class="col">
+                                                                            <p class="card-text">$@cashRequest.Amount</p>
+                                                                        </div>
+                                                                        <div class="col">
+                                                                            <p class="card-text">Outgoing</p>
+                                                                        </div>
+                                                                        <div class="col">
+                                                                            <p class="card-text">@cashRequest.DueDate.ToString("MM/dd/yyyy")</p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div id="collapseOne_@cashRequest.CashRequestID" class="collapse" aria-labelledby="headingOne_@cashRequest.CashRequestID" data-parent="#accordion">
+                                                                <div class="card-body">
+                                                                    <p class="card-text">@cashRequest.Description</p>
+                                                                    <div class="container ">
+                                                                        <div class="row">
+                                                                            <div class="col">
+                                                                                <p class="card-text">Created on: <br />@cashRequest.CreationDate.ToString("MM/dd/yyyy") </p>
+                                                                            </div>
+                                                                            <div class="col">
+                                                                                <a class="btn btn-primary" asp-controller="Functionality" asp-action="Create">Recreate</a>
+                                                                            </div>
+                                                                            <div class="col">
+                                                                                <p class="card-text">Status: <br /> @cashRequest.State</p>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                }
+                                                else if (cashRequest.User == User.Identity.Name)
+                                                {
+                                                    <div id="accordion">
+                                                        <div class="card">
+                                                            <div class="card-header" id="headingOne_@cashRequest.CashRequestID" data-toggle="collapse" data-target="#collapseOne_@cashRequest.CashRequestID" aria-expanded="false" aria-controls="collapseOne_@cashRequest.CashRequestID" style="background-color: #9EEDA1">
+                                                                <div class="container">
+                                                                    <div class="row">
+                                                                        <div class="col">
+                                                                            <h5 class="card-title">@cashRequest.Recipent</h5>
+                                                                        </div>
+                                                                        <div class="col">
+                                                                            <p class="card-text">$@cashRequest.Amount</p>
+                                                                        </div>
+                                                                        <div class="col">
+                                                                            <p class="card-text">@cashRequest.Type</p>
+                                                                        </div>
+                                                                        <div class="col">
+                                                                            <p class="card-text">@cashRequest.DueDate.ToString("MM/dd/yyyy")</p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div id="collapseOne_@cashRequest.CashRequestID" class="collapse" aria-labelledby="headingOne_@cashRequest.CashRequestID" data-parent="#accordion">
+                                                                <div class="card-body">
+                                                                    <p class="card-text">@cashRequest.Description</p>
+                                                                    <div class="container ">
+                                                                        <div class="row">
+                                                                            <div class="col">
+                                                                                <p class="card-text">Created on: <br />@cashRequest.CreationDate.ToString("MM/dd/yyyy") </p>
+                                                                            </div>
+                                                                            <div class="col">
+                                                                                <a class="btn btn-primary" asp-controller="Functionality" asp-action="Create">Recreate</a>
+                                                                            </div>
+                                                                            <div class="col">
+                                                                                <p class="card-text">Status: <br /> @cashRequest.State</p>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                }
+                                            }
+                                            else if (cashRequest.Type == "Outgoing" && cashRequest.State == "Complete")
+                                            {
+                                                if (cashRequest.Recipent == User.Identity.Name)
+                                                {
+                                                    <div id="accordion">
+                                                        <div class="card">
+                                                            <div class="card-header" id="headingOne_@cashRequest.CashRequestID" data-toggle="collapse" data-target="#collapseOne_@cashRequest.CashRequestID" aria-expanded="false" aria-controls="collapseOne_@cashRequest.CashRequestID" style="background-color: #9EEDA1">
+                                                                <div class="container">
+                                                                    <div class="row">
+                                                                        <div class="col">
+                                                                            <h5 class="card-title">@cashRequest.User</h5>
+                                                                        </div>
+                                                                        <div class="col">
+                                                                            <p class="card-text">$@cashRequest.Amount</p>
+                                                                        </div>
+                                                                        <div class="col">
+                                                                            <p class="card-text">Incoming</p>
+                                                                        </div>
+                                                                        <div class="col">
+                                                                            <p class="card-text">@cashRequest.DueDate.ToString("MM/dd/yyyy")</p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div id="collapseOne_@cashRequest.CashRequestID" class="collapse" aria-labelledby="headingOne_@cashRequest.CashRequestID" data-parent="#accordion">
+                                                                <div class="card-body">
+                                                                    <p class="card-text">@cashRequest.Description</p>
+                                                                    <div class="container ">
+                                                                        <div class="row">
+                                                                            <div class="col">
+                                                                                <p class="card-text">Created on: <br />@cashRequest.CreationDate.ToString("MM/dd/yyyy") </p>
+                                                                            </div>
+                                                                            <div class="col">
+                                                                                <a class="btn btn-primary" asp-controller="Functionality" asp-action="Create">Recreate</a>
+                                                                            </div>
+                                                                            <div class="col">
+                                                                                <p class="card-text">Status: <br /> @cashRequest.State</p>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                }
+                                                else if (cashRequest.User == User.Identity.Name)
+                                                {
+                                                    <div id="accordion">
+                                                        <div class="card">
+                                                            <div class="card-header" id="headingOne_@cashRequest.CashRequestID" data-toggle="collapse" data-target="#collapseOne_@cashRequest.CashRequestID" aria-expanded="false" aria-controls="collapseOne_@cashRequest.CashRequestID" style="background-color: #F39595">
+                                                                <div class="container">
+                                                                    <div class="row">
+                                                                        <div class="col">
+                                                                            <h5 class="card-title">@cashRequest.Recipent</h5>
+                                                                        </div>
+                                                                        <div class="col">
+                                                                            <p class="card-text">$@cashRequest.Amount</p>
+                                                                        </div>
+                                                                        <div class="col">
+                                                                            <p class="card-text">@cashRequest.Type</p>
+                                                                        </div>
+                                                                        <div class="col">
+                                                                            <p class="card-text">@cashRequest.DueDate.ToString("MM/dd/yyyy")</p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div id="collapseOne_@cashRequest.CashRequestID" class="collapse" aria-labelledby="headingOne_@cashRequest.CashRequestID" data-parent="#accordion">
+                                                                <div class="card-body">
+                                                                    <p class="card-text">@cashRequest.Description</p>
+                                                                    <div class="container ">
+                                                                        <div class="row">
+                                                                            <div class="col">
+                                                                                <p class="card-text">Created on: <br />@cashRequest.CreationDate.ToString("MM/dd/yyyy") </p>
+                                                                            </div>
+                                                                            <div class="col">
+                                                                                <a class="btn btn-primary" asp-controller="Functionality" asp-action="Create">Recreate</a>
+                                                                            </div>
+                                                                            <div class="col">
+                                                                                <p class="card-text">Status: <br /> @cashRequest.State</p>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                }
+                                            }
+                                        }
+                                    </div>
+                                    <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                                        <!--Populate History with All Completed Incoming Cash Requests-->
+                                        @foreach (var cashRequest in Model)
+                                        {
+                                            if (cashRequest.Type == "Incoming" && cashRequest.State == "Complete")
+                                            {
+                                                if (cashRequest.Recipent == User.Identity.Name)
+                                                {
+                                                    <div id="accordion">
+                                                        <div class="card">
+                                                            <div class="card-header" id="headingOne_@cashRequest.CashRequestID" data-toggle="collapse" data-target="#collapseOne_@cashRequest.CashRequestID" aria-expanded="false" aria-controls="collapseOne_@cashRequest.CashRequestID" style="background-color: #9EEDA1">
+                                                                <div class="container">
+                                                                    <div class="row">
+                                                                        <div class="col">
+                                                                            <h5 class="card-title">@cashRequest.User</h5>
+                                                                        </div>
+                                                                        <div class="col">
+                                                                            <p class="card-text">$@cashRequest.Amount</p>
+                                                                        </div>
+                                                                        <div class="col">
+                                                                            <p class="card-text">@cashRequest.Type</p>
+                                                                        </div>
+                                                                        <div class="col">
+                                                                            <p class="card-text">@cashRequest.DueDate.ToString("MM/dd/yyyy")</p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div id="collapseOne_@cashRequest.CashRequestID" class="collapse" aria-labelledby="headingOne_@cashRequest.CashRequestID" data-parent="#accordion">
+                                                                <div class="card-body">
+                                                                    <p class="card-text">@cashRequest.Description</p>
+                                                                    <div class="container ">
+                                                                        <div class="row">
+                                                                            <div class="col">
+                                                                                <p class="card-text">Created on: <br />@cashRequest.CreationDate.ToString("MM/dd/yyyy") </p>
+                                                                            </div>
+                                                                            <div class="col">
+                                                                                <a class="btn btn-primary" asp-controller="Functionality" asp-action="Create">Recreate</a>
+                                                                            </div>
+                                                                            <div class="col">
+                                                                                <p class="card-text">Status: <br /> @cashRequest.State</p>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                }
+                                                else if (cashRequest.User == User.Identity.Name)
+                                                {
+                                                    <div id="accordion">
+                                                        <div class="card">
+                                                            <div class="card-header" id="headingOne_@cashRequest.CashRequestID" data-toggle="collapse" data-target="#collapseOne_@cashRequest.CashRequestID" aria-expanded="false" aria-controls="collapseOne_@cashRequest.CashRequestID" style="background-color: #9EEDA1">
+                                                                <div class="container">
+                                                                    <div class="row">
+                                                                        <div class="col">
+                                                                            <h5 class="card-title">@cashRequest.Recipent</h5>
+                                                                        </div>
+                                                                        <div class="col">
+                                                                            <p class="card-text">$@cashRequest.Amount</p>
+                                                                        </div>
+                                                                        <div class="col">
+                                                                            <p class="card-text">@cashRequest.Type</p>
+                                                                        </div>
+                                                                        <div class="col">
+                                                                            <p class="card-text">@cashRequest.DueDate.ToString("MM/dd/yyyy")</p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div id="collapseOne_@cashRequest.CashRequestID" class="collapse" aria-labelledby="headingOne_@cashRequest.CashRequestID" data-parent="#accordion">
+                                                                <div class="card-body">
+                                                                    <p class="card-text">@cashRequest.Description</p>
+                                                                    <div class="container ">
+                                                                        <div class="row">
+                                                                            <div class="col">
+                                                                                <p class="card-text">Created on: <br />@cashRequest.CreationDate.ToString("MM/dd/yyyy") </p>
+                                                                            </div>
+                                                                            <div class="col">
+                                                                                <a class="btn btn-primary" asp-controller="Functionality" asp-action="Create">Recreate</a>
+                                                                            </div>
+                                                                            <div class="col">
+                                                                                <p class="card-text">Status: <br /> @cashRequest.State</p>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                }
+                                            }
+                                        }
+                                    </div>
+                                    <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+                                        <!--Populate History with All Completed Outgoing Cash Requests-->
+                                        @foreach (var cashRequest in Model)
+                                        {
+                                            if (cashRequest.Type == "Outgoing" && cashRequest.State == "Complete")
+                                            {
+                                                if (cashRequest.Recipent == User.Identity.Name)
+                                                {
+                                                    <div id="accordion">
+                                                        <div class="card">
+                                                            <div class="card-header" id="headingOne_@cashRequest.CashRequestID" data-toggle="collapse" data-target="#collapseOne_@cashRequest.CashRequestID" aria-expanded="false" aria-controls="collapseOne_@cashRequest.CashRequestID" style="background-color: #F39595">
+                                                                <div class="container">
+                                                                    <div class="row">
+                                                                        <div class="col">
+                                                                            <h5 class="card-title">@cashRequest.User</h5>
+                                                                        </div>
+                                                                        <div class="col">
+                                                                            <p class="card-text">$@cashRequest.Amount</p>
+                                                                        </div>
+                                                                        <div class="col">
+                                                                            <p class="card-text">@cashRequest.Type</p>
+                                                                        </div>
+                                                                        <div class="col">
+                                                                            <p class="card-text">@cashRequest.DueDate.ToString("MM/dd/yyyy")</p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div id="collapseOne_@cashRequest.CashRequestID" class="collapse" aria-labelledby="headingOne_@cashRequest.CashRequestID" data-parent="#accordion">
+                                                                <div class="card-body">
+                                                                    <p class="card-text">@cashRequest.Description</p>
+                                                                    <div class="container ">
+                                                                        <div class="row">
+                                                                            <div class="col">
+                                                                                <p class="card-text">Created on: <br />@cashRequest.CreationDate.ToString("MM/dd/yyyy") </p>
+                                                                            </div>
+                                                                            <div class="col">
+                                                                                <a class="btn btn-primary" asp-controller="Functionality" asp-action="Create">Recreate</a>
+                                                                            </div>
+                                                                            <div class="col">
+                                                                                <p class="card-text">Status: <br /> @cashRequest.State</p>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                }
+                                                else if (cashRequest.User == User.Identity.Name)
+                                                {
+                                                    <div id="accordion">
+                                                        <div class="card">
+                                                            <div class="card-header" id="headingOne_@cashRequest.CashRequestID" data-toggle="collapse" data-target="#collapseOne_@cashRequest.CashRequestID" aria-expanded="false" aria-controls="collapseOne_@cashRequest.CashRequestID" style="background-color: #F39595">
+                                                                <div class="container">
+                                                                    <div class="row">
+                                                                        <div class="col">
+                                                                            <h5 class="card-title">@cashRequest.Recipent</h5>
+                                                                        </div>
+                                                                        <div class="col">
+                                                                            <p class="card-text">$@cashRequest.Amount</p>
+                                                                        </div>
+                                                                        <div class="col">
+                                                                            <p class="card-text">@cashRequest.Type</p>
+                                                                        </div>
+                                                                        <div class="col">
+                                                                            <p class="card-text">@cashRequest.DueDate.ToString("MM/dd/yyyy")</p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div id="collapseOne_@cashRequest.CashRequestID" class="collapse" aria-labelledby="headingOne_@cashRequest.CashRequestID" data-parent="#accordion">
+                                                                <div class="card-body">
+                                                                    <p class="card-text">@cashRequest.Description</p>
+                                                                    <div class="container ">
+                                                                        <div class="row">
+                                                                            <div class="col">
+                                                                                <p class="card-text">Created on: <br />@cashRequest.CreationDate.ToString("MM/dd/yyyy") </p>
+                                                                            </div>
+                                                                            <div class="col">
+                                                                                <a class="btn btn-primary" asp-controller="Functionality" asp-action="Create">Recreate</a>
+                                                                            </div>
+                                                                            <div class="col">
+                                                                                <p class="card-text">Status: <br /> @cashRequest.State</p>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                }
+                                            }
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <div class="col">
+                <picture>
+                    <img src="~/images/default_profile.png" alt="Profile Picture" style="width:150px; height:150px" />
+                </picture>
+                <p>Username: @User.Identity.Name</p>
+                <p>Full Name: None</p>
+                <p>Email: None</p>
+                <button class="btn btn-primary">Edit</button><br />
+                <button class="btn btn-primary my-2">Change Password</button>
+            </div>
+        </div>
+    </div>
+</div>
