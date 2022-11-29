@@ -8,9 +8,7 @@ using CashTrak.Models;
 /// Handles all functionality to do with Authentication & Authorization
 /// 
 /// Author: Justin Payne, Gabriel Baluyut, Jason Cheung
-/// Date: Nov 11 2026
-/// Sources: Lab 4 MovieStore
-/// Sources: Lab 5 Routing & Controllers
+/// Date: Nov 11 2022
 /// Sources: Lab 6 Authorization & Authentication
 /// </summary>
 namespace CashTrak.Controllers

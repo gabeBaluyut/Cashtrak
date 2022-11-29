@@ -1,11 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 
+/// <summary>
+/// User Model
+/// Defines the model for a User
+/// 
+/// Author: Justin Payne, Gabriel Baluyut, Jason Cheung
+/// Date: Nov 28 2022
+/// Sources: Lab 6 Implement Authentication and Authorization
+/// </summary>
 namespace CashTrak.Models
 {
     /// <summary>
